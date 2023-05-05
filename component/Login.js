@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View,TextInput} from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-
 export default function Login({ navigation }) {
   return (
+    
     <View style={styles.container}>
       <View style={styles.form}>
         <View style={styles.login}>

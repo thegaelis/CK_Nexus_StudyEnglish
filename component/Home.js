@@ -21,6 +21,9 @@ export default function Home({ navigation }) {
           <Lesson picture={require('../assets/book.png')} name={'Education and Work'} press={()=>navigation.navigate('Words',{data:{words: words_education,questions: questions_education}})}/>
           <Lesson picture={require('../assets/book.png')} name={'Travel and Culture'} press={()=>navigation.navigate('Words',{data:{words: words_travel,questions: questions_travel}})}/>
       </View>
+      <TouchableOpacity style={styles.button}>
+        <Text onPress={() => navigation.navigate('User')} style={styles.b}>User</Text>
+      </TouchableOpacity>
     </ScrollView>
   )
 }
