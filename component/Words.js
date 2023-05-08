@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView,TouchableOpacity,FlatList} from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity,FlatList, Image} from 'react-native'
 import React from 'react'
 import Word from './Word'
 import { useRoute } from '@react-navigation/native';
@@ -7,7 +7,7 @@ import { useRoute } from '@react-navigation/native';
 
 export default function Words({navigation}) {
   const route = useRoute();
-  const { words, questions} = route.params.data;
+  const { name, words, questions} = route.params.data;
   
   const Render=({item})=>{
     return(
@@ -15,46 +15,68 @@ export default function Words({navigation}) {
     );
   }
   return (
-    <>
-      <View style={styles.container}>
+      <View>
+        <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('Home')}>
+          <Image source={require('../assets/back.png')} style={styles.backbanner}></Image>
+          <Text style={styles.banner}>
+            {name}
+          </Text>
+        </TouchableOpacity>
+        
         <FlatList 
-          numColumns={2}
-          data={words}
-          renderItem={Render}
-          keyExtractor={(item)=>item.english.toString()}
-          scrollEnabled={true}
-          height={'100%'}
-        />
-      </View>
-      <TouchableOpacity style={styles.button}>
-        <Text onPress={() => navigation.navigate('Test',[questions])} style={styles.b}>TEST</Text>
-      </TouchableOpacity>
-      </>
-    
+            // numColumns={3}
+            data={words}
+            renderItem={Render}
+            keyExtractor={(item)=>item.english.toString()}
+            scrollEnabled={true}
+            height={'80%'}
+          />
+         <TouchableOpacity style={styles.button}>
+              <Text onPress={() => navigation.navigate('Test',[questions])} style={styles.b}>TEST</Text>
+          </TouchableOpacity>
+      </View>    
   )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 10,
-        justifyContent: 'space-evenly',
-        flexDirection:'row',
-        flexWrap:'wrap',
-    },
-    button:{
-      width: '100%',
-      flex:1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    b:{
-        fontSize: 20,
-        fontWeight: 'bold',
-        width: '15%',
-        backgroundColor:'#4D33B9',
-        width:'40%',
-        paddingVertical:10,
-        textAlign: 'center',
-        color: 'white'
-    }
+  topContainer:{
+    display: 'flex',
+    flexDirection: 'row',
+    paddingBottom:20,
+    alignItems:'center',
+  },
+  banner:{
+    marginLeft:20,
+    marginTop:50,
+    fontSize:30,
+    fontWeight:'bold',
+
+  },
+  backbanner:{
+    verticalAlign:'middle',
+    marginLeft:20,
+    marginTop:50,
+  },
+  container: {
+    width:'100%',
+    dipslay:'flex',
+    flexDirection:'column',
+  },
+  button:{
+    marginTop:5,
+    width: '100%',
+    alignItems:'center',
+  },
+  b:{
+    borderRadius:15,
+    fontSize: 20,
+    fontWeight: 'bold',
+    width: '15%',
+    backgroundColor:'#43bc43',
+    width:'40%',
+    paddingVertical:10,
+    textAlign: 'center',
+    color: 'white'
+  },
+   
 })

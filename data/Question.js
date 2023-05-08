@@ -1,22 +1,22 @@
 const questions_relation = [
     {
       id: 1,
-      question: 'Câu hỏi 1',
+      question: 'Which of the following is the meaning of the word "Love"',
       answers: [
-        { id: 1, text: 'A', correct: true },
-        { id: 2, text: 'B', correct: false },
-        { id: 3, text: 'C', correct: false },
-        { id: 4, text: 'D', correct: false },
+        { id: 1, text: 'A. Tình yêu', correct: true },
+        { id: 2, text: 'B. Chia tay', correct: false },
+        { id: 3, text: 'C. Hẹn hò', correct: false },
+        { id: 4, text: 'D. Động phòng', correct: false },
       ],
     },
     {
       id: 2,
-      question: 'Câu hỏi 2',
+      question: 'Which of the following is the meaning of the word "Love"',
       answers: [
-        { id: 1, text: 'A', correct: true },
-        { id: 2, text: 'B', correct: false },
-        { id: 3, text: 'C', correct: false },
-        { id: 4, text: 'D', correct: false },
+        { id: 1, text: 'A. Tình yêu', correct: true },
+        { id: 2, text: 'B. Chia tay', correct: false },
+        { id: 3, text: 'C. Hẹn hò', correct: false },
+        { id: 4, text: 'D. Động phòng', correct: false },
       ],
     },
     // Ông thêm câu hỏi ở đây

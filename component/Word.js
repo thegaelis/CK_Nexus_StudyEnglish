@@ -28,6 +28,7 @@ export default function Word(props) {
 
       <TouchableNativeFeedback onPress={press}>
         <View style={StyleViet}>
+          <Image style={styles.picture} source={props.picture}/>
           <Text onPress={press} style={styles.vietsub}>{props.vietsub}</Text>
         </View>
       </TouchableNativeFeedback>
@@ -37,24 +38,30 @@ export default function Word(props) {
 
 const styles = StyleSheet.create({
   ENGLISH_ON:{
+    display:'flex',
+    flexDirection:'row-reverse',
     paddingTop:10,
     width:'100%',
-    height:200,
+    height:150,
     justifyContent:'center',
     alignItems:'center',
     borderColor:'red',
     borderWidth:1,
+    borderRadius:15,
   },
   VIETSUB_ON:{
+    display:'flex',
+    flexDirection:'row-reverse',
     paddingTop:10,
     width:'100%',
     justifyContent:'center',
     alignItems:'center',
     borderColor:'green',
     borderWidth:1,
-    height:200,
+    height:150,
     fontSize:40,
     fontWeight:'bold',
+    borderRadius:15,
   },
   ENGLISH_OFF:{
     display:'none',
@@ -63,22 +70,27 @@ const styles = StyleSheet.create({
     display:'none',
   },
   vietsub:{
+    marginLeft:20,
     fontSize:20,
     fontWeight:'bold',
   },
   container:{
-    width:'40%',
+    width:'90%',
     marginHorizontal:20,
-    marginTop:40,
+    marginTop:30,
   },
   picture:{
-    width:'100%',
-    height:150,
+    marginRight:'auto',
+    width:'50%',
+    height:100,
     borderColor:'red',
   },
   english:{
+    marginLeft:20,
     marginTop:5,
     marginBottom:5,
     color:'red',
+    fontSize:20,
+    fontWeight:'bold',
   },
 })

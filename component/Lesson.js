@@ -10,10 +10,16 @@ export default function Lesson(props) {
             //   <Image style={styles.picture} source={props.picture} />
             //   <Text style={styles.name} onPress={props.press}>{props.name}</Text>
             // </View> 
-            <TouchableWithoutFeedback onPress={props.press}>
+            // If not completed, then block the user from touching
+            <TouchableWithoutFeedback>
               <View style = {styles.container}>
-                <Image style={styles.picture} source={props.picture} />
                 <Text style={styles.name} onPress={props.press}>{props.name}</Text>
+                <Image style={styles.picture} source={props.picture} />
+                <Text style={styles.status}>Not completed</Text>
+                <Text style={styles.score}>50/100 at this lesson</Text>
+                <TouchableOpacity style={styles.button}>
+                  <Text onPress={props.press} style={styles.b}>View Lesson</Text>
+                </TouchableOpacity>
               </View>
           </TouchableWithoutFeedback>
         );
@@ -22,25 +28,55 @@ export default function Lesson(props) {
 
 const styles = StyleSheet.create({
     container:{
-      justifyContent:'center',
-      alignItems:'center',
-      height:200,
-      borderColor:'red',
-      borderWidth:1,
+      dipslay: 'flex',
+      flexDirection: 'column',
+      height:'auto',
+      width: '85%',
       flexBasis:'40%',     
       marginTop:40,
       marginHorizontal:20,
+      borderRadius:15,
+      backgroundColor: "#FFFFFF",
     },
     name:{
-      marginTop:5,
-      marginBottom:5,
+      fontSize:30,
+      fontWeight:'bold',
+      margin:10,
       color:'red',
     },
     picture:{
-      borderRadius:50,
-      borderWidth:1,
+      alignSelf:'center',
       width:100,
       height:100,
-      borderColor:'red',
+    },
+    status:{
+      margin:10,
+      fontSize:20,
+      fontWeight:'bold',
+      margin:10,
+      color:'#000000',
+    },
+    score:{
+      margin:10,
+      fontSize:20,
+      margin:10,
+      color:'#000000',
+    },
+    button:{
+      width: 'auto',
+
+    },
+    b:{
+      margin:10,
+      fontSize: 15,
+      fontWeight: 'bold',
+      width: '15%',
+      backgroundColor:'#43bc43',
+      width:'40%',
+      paddingVertical:10,
+      textAlign: 'center',
+      color: 'white',
+      borderRadius:15
     }
+
 })

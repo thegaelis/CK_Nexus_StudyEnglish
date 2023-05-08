@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList,Alert} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList,Alert} from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 
@@ -27,8 +27,8 @@ export default function Test({navigation}) {
       }
       else{
         Alert.alert(
-            'Hệ thống',
-            'Bạn phải chọn 1 đáp án',
+            'Test Alert',
+            'You must select an answer',
             [{text: 'OK'}],
             { cancelable: false }
           );
@@ -47,16 +47,27 @@ export default function Test({navigation}) {
       <View style={styles.container}>
         {currentQuestion < questions.length ? (
           <>
+            <Text style={styles.banner}>Question {questions[currentQuestion].id} </Text>
             <Text style={styles.question}>{questions[currentQuestion].question}</Text>
             <FlatList
               data={questions[currentQuestion].answers}
               renderItem={renderItem}
               keyExtractor={(item) => item.id.toString()}
               extraData={selectedAnswer}
-            />
-            <TouchableOpacity style={styles.button} onPress={handleNextQuestion}>
-              <Text>Next</Text>
-            </TouchableOpacity>
+            /> 
+            {(currentQuestion < (questions.length -1)) ? 
+            (
+              <TouchableOpacity style={styles.button} onPress={handleNextQuestion}>
+                <Text>Next</Text>
+              </TouchableOpacity>
+            )
+            :
+            (
+              <TouchableOpacity style={styles.button} onPress={handleNextQuestion}>
+                <Text>Finish</Text>
+              </TouchableOpacity>
+            )
+            } 
           </>
         ) : (
           <>
@@ -76,17 +87,24 @@ export default function Test({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        display:'flex',
         marginTop:50,
     },
+    banner:{
+      margin:20,
+      fontSize: 20,
+      fontWeight: 'bold',
+      alignSelf:'center',
+    },
     question: {
+        margin:20,
         fontSize: 20,
-        fontWeight: 'bold',
         marginVertical: 20,
     },
     answer: {
+        margin:20,
         backgroundColor: 'white',
-        borderRadius: 10,
+        borderRadius: 15,
         padding: 20,
         marginVertical: 10,
     },
@@ -94,19 +112,27 @@ const styles = StyleSheet.create({
         backgroundColor: '#b3d9ff',
     },
     button:{
+        height: 'auto',
+        width:'auto',
+        borderRadius:15,
+        margin:20,
         marginBottom:150,
         alignItems:'center',
         backgroundColor:'white',
-        padding:40,
+        padding:20,
+
     },
     button_2:{
+      height: 'auto',
+      width:'auto',
+      borderRadius:15,
+      margin:20,
       marginBottom:10,
       alignItems:'center',
       backgroundColor:'white',
-      padding:40,
+      padding:20,
     },
     result: {
-        flex:1,
         fontSize: 20,
         fontWeight: 'bold',
         textAlign:'center',
