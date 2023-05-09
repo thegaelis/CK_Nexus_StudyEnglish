@@ -1,7 +1,43 @@
 import { StyleSheet, Text, View,TextInput, ImageBackground} from 'react-native'
-import React from 'react'
+import React,{ useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+
+import { getAuth,signInWithEmailAndPassword } from "firebase/auth";
+import { Alert } from 'react-native';
+import {app} from './Firebasecg.js';
+
+
 export default function Login({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+
+  function handleEmailChange(text) {
+    setEmail(text);
+  }
+
+  function handlePassChange(text) {
+      setPass(text);
+  }
+
+  const login=()=>{
+    const auth = getAuth(app);
+    signInWithEmailAndPassword(auth, email, pass)
+      .then((userCredential) => {
+        const Email=email.split('@')[0];
+        setEmail('');
+        setPass('');
+        navigation.navigate('Home',{Email});
+      })
+      .catch((error) => {
+        console.error(error);
+        Alert.alert(
+          'Thông báo',
+          'Tai khoan ko dung',
+          [    { text: 'OK' }  ]
+        );
+      });
+  }
+
   return (
     <ImageBackground source={require('../assets/background.png')}>
     <View style={styles.container}>
@@ -9,20 +45,23 @@ export default function Login({ navigation }) {
       <Text style={styles.banner}>Keep up learning English</Text>
         <View style={styles.login}>
             <Text style={styles.text}>Username</Text>
-            <TextInput style={styles.input} type="username" autoCapitalize='none'></TextInput>
+            <TextInput value={email} onChangeText={handleEmailChange} style={styles.input} type="username" autoCapitalize='none'></TextInput>
         </View>
         <View style={styles.login}>
             <Text style={styles.text}>Pass</Text>
-            <TextInput style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
+            <TextInput  value={pass} onChangeText={handlePassChange} style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
         </View>
       </View>
       <TouchableOpacity style={styles.button}>
-        <Text onPress={() => navigation.navigate('Home')} style={styles.b}>Login</Text>
+        <Text onPress={() => login()} style={styles.b}>Login</Text>
       </TouchableOpacity>
     </View>
     </ImageBackground>
   )
 }
+
+
+
 
 const styles = StyleSheet.create({
     container: {

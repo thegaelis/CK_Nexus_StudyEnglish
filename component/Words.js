@@ -7,8 +7,7 @@ import { useRoute } from '@react-navigation/native';
 
 export default function Words({navigation}) {
   const route = useRoute();
-  const { name, words, questions} = route.params.data;
-  
+  const {Email,name, words, questions} = route.params.data;
   const Render=({item})=>{
     return(
       <Word picture={item.picture} english={item.english} vietsub={item.vietsub} />
@@ -16,7 +15,7 @@ export default function Words({navigation}) {
   }
   return (
       <View>
-        <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('Home',{Email})}>
           <Image source={require('../assets/back.png')} style={styles.backbanner}></Image>
           <Text style={styles.banner}>
             {name}
@@ -32,7 +31,8 @@ export default function Words({navigation}) {
             height={'80%'}
           />
          <TouchableOpacity style={styles.button}>
-              <Text onPress={() => navigation.navigate('Test',[questions])} style={styles.b}>TEST</Text>
+         
+              <Text onPress={() => navigation.navigate('Test',{data:{name:name,questions:questions,Email:Email}})} style={styles.b}>TEST</Text>
           </TouchableOpacity>
       </View>    
   )
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
   },
   backbanner:{
-    verticalAlign:'middle',
+  //  verticalAlign:'middle',
     marginLeft:20,
     marginTop:50,
   },

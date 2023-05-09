@@ -1,7 +1,108 @@
-import { StyleSheet, Text, View,TextInput,ImageBackground} from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View,TextInput,ImageBackground,Alert} from 'react-native'
+import React,{ useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+
+//FIREBASE
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {app} from './Firebasecg.js';
+import { getDatabase, ref, set } from "firebase/database";
+
+
 export default function Register({ navigation }) {
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const [rePass, setrePass] = useState('');
+
+    const register=()=>{
+        
+        if(username.trim()==''||email.trim()==''||pass.trim()==''||rePass.trim()=='') {
+            Alert.alert(
+                'Thông báo',
+                'Vui lòng nhập đủ thông tin',
+                [    { text: 'OK' }  ]
+            );
+        }
+        else {
+            if(pass!==rePass||pass.length<6) {
+                Alert.alert(
+                    'Thông báo',
+                    'Lỗi mật khẩu',
+                    [    { text: 'OK' }  ]
+                );
+            }
+            else{
+                const auth = getAuth(app);
+                createUserWithEmailAndPassword(auth, email, pass)
+                .then(() => {
+                    Alert.alert(
+                        'Thông báo',
+                        'Đăng kí tài khoản thành công',
+                        [    { text: 'OK' }  ]
+                    );
+                    add(username,email,pass);
+                    setUsername('');
+                    setEmail('');
+                    setPass('');
+                    setrePass('');
+                    navigation.navigate('Login');
+                })
+                .catch(() => {
+                    Alert.alert(
+                        'Thông báo',
+                        'Email đã tồn tại',
+                        [    { text: 'OK' }  ]
+                    );
+                    
+                });
+            }
+        }
+    };
+    
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+
+    const add=(username,email,pass)=>{
+        const db = getDatabase(app);
+        const Email=email.split('@');
+        set(ref(db, 'person/'+Email[0]), {
+          username: username,
+          email: email,
+          password: pass,
+          level:1,
+          day:day+"/"+month+"/"+year
+        });
+
+        set(ref(db, 'score/'+Email[0]), {
+            Relationships:0,
+            Time:0,
+            Weather:0,
+            Animals:0,
+            Food:0,
+            Sports:0,
+            Education:0,
+            Travel:0
+        });
+    };
+
+    function handleUserNameChange(text) {
+        setUsername(text);
+    }
+
+    function handleEmailChange(text) {
+        setEmail(text);
+    }
+  
+    function handlePassChange(text) {
+        setPass(text);
+    }
+
+    function handleRePassChange(text) {
+        setrePass(text);
+    }
+
   return (
     <ImageBackground source={require('../assets/background.png')}>
     <View style={styles.container}>
@@ -9,23 +110,23 @@ export default function Register({ navigation }) {
         <Text style={styles.banner}>Join us to study English</Text>
         <View style={styles.register}>
             <Text style={styles.text}>Username</Text>
-            <TextInput style={styles.input} type="username" autoCapitalize='none'></TextInput>
+            <TextInput value={username} onChangeText={handleUserNameChange} style={styles.input} type="username" autoCapitalize='none'></TextInput>
         </View>
         <View style={styles.register}>
-            <Text style={styles.text}>Name</Text>
-            <TextInput style={styles.input} type="name" autoCapitalize='none'></TextInput>
+            <Text style={styles.text}>Email</Text>
+            <TextInput value={email} onChangeText={handleEmailChange} style={styles.input} type="name" autoCapitalize='none'></TextInput>
         </View>
         <View style={styles.register}>
             <Text style={styles.text}>Password</Text>
-            <TextInput style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
+            <TextInput value={pass} onChangeText={handlePassChange} style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
         </View>
         <View style={styles.register}>
             <Text style={styles.text}>Re-enter Password</Text>
-            <TextInput style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
+            <TextInput value={rePass} onChangeText={handleRePassChange} style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
         </View>
         <View>
             <TouchableOpacity style={styles.button}>
-                <Text onPress={() => navigation.navigate('Login')} style={styles.b}>Register</Text>
+                <Text onPress={() => register()} style={styles.b}>Register</Text>
             </TouchableOpacity>
         </View>
       </View>

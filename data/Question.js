@@ -19,6 +19,87 @@ const questions_relation = [
         { id: 4, text: 'D. Động phòng', correct: false },
       ],
     },
+    {
+      id: 3,
+      question: 'Which of the following is the meaning of the word "Love"',
+      answers: [
+        { id: 1, text: 'A. Tình yêu', correct: true },
+        { id: 2, text: 'B. Chia tay', correct: false },
+        { id: 3, text: 'C. Hẹn hò', correct: false },
+        { id: 4, text: 'D. Động phòng', correct: false },
+      ],
+    },
+    {
+      id: 4,
+      question: 'Which of the following is the meaning of the word "Love"',
+      answers: [
+        { id: 1, text: 'A. Tình yêu', correct: true },
+        { id: 2, text: 'B. Chia tay', correct: false },
+        { id: 3, text: 'C. Hẹn hò', correct: false },
+        { id: 4, text: 'D. Động phòng', correct: false },
+      ],
+    },
+    {
+      id: 5,
+      question: 'Which of the following is the meaning of the word "Love"',
+      answers: [
+        { id: 1, text: 'A. Tình yêu', correct: true },
+        { id: 2, text: 'B. Chia tay', correct: false },
+        { id: 3, text: 'C. Hẹn hò', correct: false },
+        { id: 4, text: 'D. Động phòng', correct: false },
+      ],
+    },
+    {
+      id: 6,
+      question: 'Which of the following is the meaning of the word "Love"',
+      answers: [
+        { id: 1, text: 'A. Tình yêu', correct: true },
+        { id: 2, text: 'B. Chia tay', correct: false },
+        { id: 3, text: 'C. Hẹn hò', correct: false },
+        { id: 4, text: 'D. Động phòng', correct: false },
+      ],
+    },
+    {
+      id: 7,
+      question: 'Which of the following is the meaning of the word "Love"',
+      answers: [
+        { id: 1, text: 'A. Tình yêu', correct: true },
+        { id: 2, text: 'B. Chia tay', correct: false },
+        { id: 3, text: 'C. Hẹn hò', correct: false },
+        { id: 4, text: 'D. Động phòng', correct: false },
+      ],
+    },
+    {
+      id: 8,
+      question: 'Which of the following is the meaning of the word "Love"',
+      answers: [
+        { id: 1, text: 'A. Tình yêu', correct: true },
+        { id: 2, text: 'B. Chia tay', correct: false },
+        { id: 3, text: 'C. Hẹn hò', correct: false },
+        { id: 4, text: 'D. Động phòng', correct: false },
+      ],
+    },
+    {
+      id: 9,
+      question: 'Which of the following is the meaning of the word "Love"',
+      answers: [
+        { id: 1, text: 'A. Tình yêu', correct: true },
+        { id: 2, text: 'B. Chia tay', correct: false },
+        { id: 3, text: 'C. Hẹn hò', correct: false },
+        { id: 4, text: 'D. Động phòng', correct: false },
+      ],
+    },
+    {
+      id: 10,
+      question: 'Which of the following is the meaning of the word "Love"',
+      answers: [
+        { id: 1, text: 'A. Tình yêu', correct: true },
+        { id: 2, text: 'B. Chia tay', correct: false },
+        { id: 3, text: 'C. Hẹn hò', correct: false },
+        { id: 4, text: 'D. Động phòng', correct: false },
+      ],
+    },
+    
     // Ông thêm câu hỏi ở đây
 ];
 const questions_time = [

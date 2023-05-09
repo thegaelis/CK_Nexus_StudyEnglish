@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View ,Image, TouchableOpacity} from 'react-native';
 import React from 'react';
+import { useRoute } from '@react-navigation/native';
 
 
 export default function About({ navigation }) {
+  const route = useRoute();
+  const {Email} = route.params;
   return (
     <View>
-      <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('User')}>
+      <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('User',{Email})}>
           <Image source={require('../assets/back.png')} style={styles.backbanner}></Image>
           <Text style={styles.banner}>
             About The App

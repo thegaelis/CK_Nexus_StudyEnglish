@@ -1,14 +1,141 @@
 import { StyleSheet, Text, View ,Image, TouchableOpacity,TextInput} from 'react-native'
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React,{useState,useEffect} from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { useRoute } from '@react-navigation/native';
+import { getDatabase,ref,update,onValue} from "firebase/database";
+import { getAuth,updatePassword } from "firebase/auth";
+import {app} from './Firebasecg.js';
+import { Alert } from 'react-native';
 
 export default function Option({navigation}) {
+  const route = useRoute();
+  const {Email} = route.params;
+  const [name,setName] = useState('');
+  const [pass, setPass] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [rePass, setrePass] = useState('');
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const db = getDatabase(app);
+    const starCountRef = ref(db, 'person/' + Email);
+    onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
+        setUserData(data);
+    });
+  }, [Email]);
+
+  function handleNameChange(text) {
+    setName(text);
+  }
+
+  function handlePassChange(text) {
+    setPass(text);
+  }
+
+  function handleNewPassChange(text) {
+    setNewPass(text);
+  }
+
+  function handleRePassChange(text) {
+      setrePass(text);
+  }
+
+  const update_info=()=>{
+    if(name.trim()==''){
+      Alert.alert(
+        'Thông báo',
+        'Vui lòng nhập đủi thông tin',
+        [    { text: 'OK' }  ]
+      );
+    }
+    else {
+      const db = getDatabase(app)
+      const Ref = ref(db, 'person/' + Email);
+
+      update(Ref,{
+        username: name,
+      })
+      .then(() => {
+        Alert.alert(
+          'Thông báo',
+          'Cập nhập username thành công',
+          [    { text: 'OK' }  ]
+        );
+      })
+      .catch(() => {
+        Alert.alert(
+          'Thông báo',
+          'Lõi',
+          [    { text: 'OK' }  ]
+        );
+      });
+    }
+  }
+  
+
+  const update_pass=()=>{
+    if(newPass.trim()==''||pass.trim()==''||rePass.trim()=='') {
+      Alert.alert(
+          'Thông báo',
+          'Vui lòng nhập đủ thông tin',
+          [    { text: 'OK' }  ]
+      );
+    }
+    else {
+      if(newPass!==rePass||newPass.length<6) {
+          Alert.alert(
+              'Thông báo',
+              'Lỗi mật khẩu',
+              [    { text: 'OK' }  ]
+          );
+      }
+      else if(userData.password!==pass){
+        Alert.alert(
+          'Thông báo',
+          'Sai mật khẩu',
+          [    { text: 'OK' }  ]
+        );
+      }
+      else if(newPass===userData.password){
+        Alert.alert(
+          'Thông báo',
+          'Mật khẩu mới trùng với mật khẩu cũ',
+          [    { text: 'OK' }  ]
+        );
+      }
+      else {
+        const user = getAuth(app).currentUser;
+        updatePassword(user, newPass).then(() => {
+          const db = getDatabase(app)
+          const Ref = ref(db, 'person/' + Email);
+          update(Ref,{
+            password: newPass,
+          })
+          
+          Alert.alert(
+            'Thông báo',
+            'Cập nhập password thành công',
+            [    { text: 'OK' }  ]
+          );
+        }).catch((error) => {
+          console.error(error);
+          Alert.alert(
+            'Thông báo',
+            'Lỗi',
+            [    { text: 'OK' }  ]
+          );
+        });
+       
+      }
+
+    }
+  }
         return (
             <View>
-              <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('User')}>
+              <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('User',{Email})}>
                 <Image source={require('../assets/back.png')} style={styles.backbanner}></Image>
                 <Text style={styles.banner}>
                   Edit Your Account
@@ -22,33 +149,30 @@ export default function Option({navigation}) {
                   <Text style={styles.formbanner}>Info</Text>
                   <View style={styles.section}>
                       <Text style={styles.text}>Username</Text>
-                      <TextInput style={styles.input} type="username" autoCapitalize='none'></TextInput>
+                      <TextInput value={name} onChangeText={handleNameChange} style={styles.input} type="username" autoCapitalize='none'></TextInput>
                   </View>
-                  <View style={styles.section}>
-                      <Text style={styles.text}>Name</Text>
-                      <TextInput style={styles.input} type="name" autoCapitalize='none'></TextInput>
-                  </View>
+                  
                   <View>
                       <TouchableOpacity style={styles.button}>
-                          <Text style={styles.b}>Update Info</Text>
+                          <Text onPress={()=>update_info()} style={styles.b}>Update Info</Text>
                       </TouchableOpacity>
                   </View>
                   <Text style={styles.formbanner}>Password</Text>
                   <View style={styles.section}>
                       <Text style={styles.text}>Current Password</Text>
-                      <TextInput style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
+                      <TextInput value={pass} onChangeText={handlePassChange} style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
                   </View>
                   <View style={styles.section}>
                       <Text style={styles.text}>New Password</Text>
-                      <TextInput style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
+                      <TextInput value={newPass} onChangeText={handleNewPassChange} style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
                   </View>
                   <View style={styles.section}>
                       <Text style={styles.text}>Re-enter New Password</Text>
-                      <TextInput style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
+                      <TextInput value={rePass} onChangeText={handleRePassChange} style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
                   </View>
                   <View>
                       <TouchableOpacity style={styles.button}>
-                          <Text style={styles.b}>Update Password</Text>
+                          <Text onPress={()=>update_pass()}  style={styles.b}>Update Password</Text>
                       </TouchableOpacity>
                   </View>
                 </View>
@@ -79,7 +203,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   backbanner:{
-    verticalAlign:'middle',
+    //verticalAlign:'middle',
     marginLeft:20,
     marginTop:50,
   }

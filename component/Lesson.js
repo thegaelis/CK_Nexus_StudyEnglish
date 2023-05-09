@@ -1,10 +1,20 @@
 import { StyleSheet, Text, View ,Image, TouchableOpacity,TouchableWithoutFeedback} from 'react-native'
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-
+import React,{useEffect,useState} from 'react';
+import { getAuth} from "firebase/auth";
+import {app} from './Firebasecg.js';
+import { getDatabase,ref,onValue} from "firebase/database";
 export default function Lesson(props) {
+        const [score, setScore] = useState(0);
+        const user = getAuth(app).currentUser;
+        const email=user.email.split("@")[0];
+        useEffect(() => {
+          const db = getDatabase(app);
+          const starCountRef = ref(db, 'score/' + email+'/'+props.name.split(' ')[0]);
+          onValue(starCountRef, (snapshot) => {
+              const data = snapshot.val();
+              setScore(data);
+          });
+        }, [email]);
         return (
             // <View style = {styles.container}>
             //   <Image style={styles.picture} source={props.picture} />
@@ -15,8 +25,8 @@ export default function Lesson(props) {
               <View style = {styles.container}>
                 <Text style={styles.name} onPress={props.press}>{props.name}</Text>
                 <Image style={styles.picture} source={props.picture} />
-                <Text style={styles.status}>Not completed</Text>
-                <Text style={styles.score}>50/100 at this lesson</Text>
+                <Text style={styles.status}>{parseInt(score)<8 ?("Not completed"):("Completed")}</Text>
+                <Text style={styles.score}>{score}/10 at this lesson</Text>
                 <TouchableOpacity style={styles.button}>
                   <Text onPress={props.press} style={styles.b}>View Lesson</Text>
                 </TouchableOpacity>
