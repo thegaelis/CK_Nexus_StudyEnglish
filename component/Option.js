@@ -46,8 +46,8 @@ export default function Option({navigation}) {
   const update_info=()=>{
     if(name.trim()==''){
       Alert.alert(
-        'Thông báo',
-        'Vui lòng nhập đủi thông tin',
+        'Alert',
+        'Fill all the required field',
         [    { text: 'OK' }  ]
       );
     }
@@ -60,15 +60,15 @@ export default function Option({navigation}) {
       })
       .then(() => {
         Alert.alert(
-          'Thông báo',
-          'Cập nhập username thành công',
+          'Alert',
+          'Username updated successfully',
           [    { text: 'OK' }  ]
         );
       })
       .catch(() => {
         Alert.alert(
-          'Thông báo',
-          'Lõi',
+          'Alert',
+          'Error',
           [    { text: 'OK' }  ]
         );
       });
@@ -151,7 +151,6 @@ export default function Option({navigation}) {
                       <Text style={styles.text}>Username</Text>
                       <TextInput value={name} onChangeText={handleNameChange} style={styles.input} type="username" autoCapitalize='none'></TextInput>
                   </View>
-                  
                   <View>
                       <TouchableOpacity style={styles.button}>
                           <Text onPress={()=>update_info()} style={styles.b}>Update Info</Text>

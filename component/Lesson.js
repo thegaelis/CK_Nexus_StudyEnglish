@@ -30,6 +30,23 @@ export default function Lesson(props) {
                 <TouchableOpacity style={styles.button}>
                   <Text onPress={props.press} style={styles.b}>View Lesson</Text>
                 </TouchableOpacity>
+                <Text style={styles.content}>Top 3 of the topic</Text>
+                  <View style={styles.leaderboardContainerFirst}>
+                    <Text style={styles.leaderboardplace}>#1</Text>
+                    <Text style={styles.leaderboardname}>Nguyen Van A</Text>
+                    <Text style={styles.leaderboardlevel}>Lvl 4</Text>
+                    <Text></Text>
+                  </View>
+                  <View style={styles.leaderboardContainerSecond}>
+                    <Text style={styles.leaderboardplace}>#2</Text>
+                    <Text style={styles.leaderboardname}>Nguyen Van A</Text>
+                    <Text style={styles.leaderboardlevel}>Lvl 4</Text>
+                  </View>
+                  <View style={styles.leaderboardContainerThird}>
+                    <Text style={styles.leaderboardplace}>#3</Text>
+                    <Text style={styles.leaderboardname}>Nguyen Van A</Text>
+                    <Text style={styles.leaderboardlevel}>Lvl 4</Text>
+                  </View>
               </View>
           </TouchableWithoutFeedback>
         );
@@ -47,6 +64,7 @@ const styles = StyleSheet.create({
       marginHorizontal:20,
       borderRadius:15,
       backgroundColor: "#FFFFFF",
+      padding:10,
     },
     name:{
       fontSize:30,
@@ -87,6 +105,59 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       color: 'white',
       borderRadius:15
-    }
+    },
+    content:{
+      margin:10,
+      fontSize:20,
+      fontWeight:'bold',
+      margin:10,
+      color:'black',
+    },
+    leaderboardContainerFirst:{
+      dipslay:'flex',
+      flexDirection:'row',
+      width:'auto',
+      margin:10,
+      padding:5,
+      borderRadius:15,
+      backgroundColor:'gold',
+    },
+    leaderboardContainerSecond:{
+      dipslay:'flex',
+      flexDirection:'row',
+      width:'auto',
+      margin:10,
+      padding:5,
+      borderRadius:15,
+      backgroundColor:'silver',
+    },
+    leaderboardContainerThird:{
+      dipslay:'flex',
+      flexDirection:'row',
+      width:'auto',
+      margin:10,
+      padding:5,
+      borderRadius:15,
+      backgroundColor:'peru',
+    },
+    leaderboardlevel:{
+      marginLeft:'auto',
+      fontSize:20,
+      fontWeight:'bold',
+      margin:5,
+      color:'#FFFFFF',
+    },
+    leaderboardname:{
+      fontSize:20,
+      fontWeight:'bold',
+      margin:5,
+      color:'#FFFFFF',
+    },
+    leaderboardplace:{
+      fontSize:20,
+      fontWeight:'bold',
+      margin:5,
+      color:'#FFFFFF',
+    },
 
 })

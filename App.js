@@ -13,6 +13,7 @@ import User from './component/User.js';
 import Option from './component/Option.js';
 import Register from './component/Register.js'
 import About from'./component/About.js';
+import Topic from './component/Topic.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Topic" component={Topic}/>
         <Stack.Screen name="Words" component={Words} />
         <Stack.Screen name="Test" component={Test} />
         <Stack.Screen name="Option" component={Option} />

@@ -31,8 +31,8 @@ export default function Login({ navigation }) {
       .catch((error) => {
         console.error(error);
         Alert.alert(
-          'Thông báo',
-          'Tai khoan ko dung',
+          'Alert',
+          'Invalid Credential',
           [    { text: 'OK' }  ]
         );
       });
@@ -44,11 +44,11 @@ export default function Login({ navigation }) {
       <View style={styles.form}>
       <Text style={styles.banner}>Keep up learning English</Text>
         <View style={styles.login}>
-            <Text style={styles.text}>Username</Text>
+            <Text style={styles.text}>Email</Text>
             <TextInput value={email} onChangeText={handleEmailChange} style={styles.input} type="username" autoCapitalize='none'></TextInput>
         </View>
         <View style={styles.login}>
-            <Text style={styles.text}>Pass</Text>
+            <Text style={styles.text}>Password</Text>
             <TextInput  value={pass} onChangeText={handlePassChange} style={styles.input} type="password" autoCapitalize='none' secureTextEntry={true}></TextInput>
         </View>
       </View>
