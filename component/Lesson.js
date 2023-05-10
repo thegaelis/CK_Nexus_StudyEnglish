@@ -3,16 +3,38 @@ import React,{useEffect,useState} from 'react';
 import { getAuth} from "firebase/auth";
 import {app} from './Firebasecg.js';
 import { getDatabase,ref,onValue} from "firebase/database";
+
 export default function Lesson(props) {
         const [score, setScore] = useState(0);
+        const [leaderboard, setLeaderBoard] = useState([]);
         const user = getAuth(app).currentUser;
         const email=user.email.split("@")[0];
         useEffect(() => {
           const db = getDatabase(app);
-          const starCountRef = ref(db, 'score/' + email+'/'+props.name.split(' ')[0]);
-          onValue(starCountRef, (snapshot) => {
+          const Ref_lesson = ref(db, 'score/' + email+'/'+props.name.split(' ')[0]);
+          const Ref_name = ref(db, 'score');
+          
+          onValue(Ref_lesson, (snapshot) => {
               const data = snapshot.val();
               setScore(data);
+          });
+
+          onValue(Ref_name, (snapshot) => {
+            const data = snapshot.val();
+            const name = Object.keys(data);
+            console.log(name);
+            let score_array = [];
+            for(let x of name){
+              const Ref_score = ref(db,'score/'+x+'/'+props.name);
+              onValue(Ref_score, (snapshot_2) => {
+                const data_2 = snapshot_2.val();
+               
+                score_array.push({name:x, score:data_2});
+              });
+            }
+               score_array.sort((a,b) => b.score-a.score);
+               console.log(score_array);
+               setLeaderBoard(score_array);
           });
         }, [email]);
         return (
@@ -31,21 +53,21 @@ export default function Lesson(props) {
                   <Text onPress={props.press} style={styles.b}>View Lesson</Text>
                 </TouchableOpacity>
                 <Text style={styles.content}>Top 3 of the topic</Text>
-                  <View style={styles.leaderboardContainerFirst}>
+                <View style={styles.leaderboardContainerFirst}>
                     <Text style={styles.leaderboardplace}>#1</Text>
-                    <Text style={styles.leaderboardname}>Nguyen Van A</Text>
-                    <Text style={styles.leaderboardlevel}>Lvl 4</Text>
+                    <Text style={styles.leaderboardname}>{leaderboard?.[0]?.['name']}</Text>
+                    <Text style={styles.leaderboardlevel}>{leaderboard?.[0]?.['score']}</Text>
                     <Text></Text>
                   </View>
                   <View style={styles.leaderboardContainerSecond}>
                     <Text style={styles.leaderboardplace}>#2</Text>
-                    <Text style={styles.leaderboardname}>Nguyen Van A</Text>
-                    <Text style={styles.leaderboardlevel}>Lvl 4</Text>
+                    <Text style={styles.leaderboardname}>{leaderboard?.[1]?.['name']}</Text>
+                    <Text style={styles.leaderboardlevel}>{leaderboard?.[1]?.['score']}</Text>
                   </View>
                   <View style={styles.leaderboardContainerThird}>
                     <Text style={styles.leaderboardplace}>#3</Text>
-                    <Text style={styles.leaderboardname}>Nguyen Van A</Text>
-                    <Text style={styles.leaderboardlevel}>Lvl 4</Text>
+                    <Text style={styles.leaderboardname}>{leaderboard?.[2]?.['name']}</Text>
+                    <Text style={styles.leaderboardlevel}>{leaderboard?.[2]?.['score']}</Text>
                   </View>
               </View>
           </TouchableWithoutFeedback>

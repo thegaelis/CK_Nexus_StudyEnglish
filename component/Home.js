@@ -6,6 +6,7 @@ import { getDatabase, ref, onValue} from "firebase/database";
 
 export default function Home({ navigation }) {
   const [userData, setUserData] = useState(null);
+  const [leaderboard, setLeaderBoard] = useState([]);
   const route = useRoute();
   const {Email} = route.params;
 
@@ -16,15 +17,31 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     const db = getDatabase(app);
-    const starCountRef = ref(db, 'person/' + Email);
-    onValue(starCountRef, (snapshot) => {
+    const Ref_person = ref(db, 'person/' + Email);
+    const Ref_name = ref(db, 'person');
+    onValue(Ref_person, (snapshot) => {
         const data = snapshot.val();
         setUserData(data); 
     });
+    onValue(Ref_name, (snapshot) => {
+        const data = snapshot.val();
+        const name = Object.keys(data);
+        
+        let level = [];
+        for(let x of name){
+          const Ref_level = ref(db,'person/'+x);
+          onValue(Ref_level, (snapshot_2) => {
+            const data_2 = snapshot_2.val();
+            level.push({name: x, level:data_2.level});
+          });
+        }
+        level.sort((a,b) => b.level-a.level);
+        setLeaderBoard(level);
+    });
   }, [Email]);
 
-
-  
+  console.log(leaderboard);
+ 
   return (
     <View>
       <View style={styles.topContainer}>
@@ -47,19 +64,19 @@ export default function Home({ navigation }) {
                   <Text style={styles.content}>Top 3 of the app</Text>
                   <View style={styles.leaderboardContainerFirst}>
                     <Text style={styles.leaderboardplace}>#1</Text>
-                    <Text style={styles.leaderboardname}>Nguyen Van A</Text>
-                    <Text style={styles.leaderboardlevel}>Lvl 4</Text>
+                    <Text style={styles.leaderboardname}>{leaderboard?.[0]?.['name']}</Text>
+                    <Text style={styles.leaderboardlevel}>{leaderboard?.[0]?.['level']}</Text>
                     <Text></Text>
                   </View>
                   <View style={styles.leaderboardContainerSecond}>
                     <Text style={styles.leaderboardplace}>#2</Text>
-                    <Text style={styles.leaderboardname}>Nguyen Van A</Text>
-                    <Text style={styles.leaderboardlevel}>Lvl 4</Text>
+                    <Text style={styles.leaderboardname}>{leaderboard?.[1]?.['name']}</Text>
+                    <Text style={styles.leaderboardlevel}>{leaderboard?.[1]?.['level']}</Text>
                   </View>
                   <View style={styles.leaderboardContainerThird}>
                     <Text style={styles.leaderboardplace}>#3</Text>
-                    <Text style={styles.leaderboardname}>Nguyen Van A</Text>
-                    <Text style={styles.leaderboardlevel}>Lvl 4</Text>
+                    <Text style={styles.leaderboardname}>{leaderboard?.[2]?.['name']}</Text>
+                    <Text style={styles.leaderboardlevel}>{leaderboard?.[2]?.['level']}</Text>
                   </View>
             </View>
             <View style={styles.itemsTopic}>

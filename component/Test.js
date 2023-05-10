@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList,Alert} from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { getDatabase,ref,update,onValue} from "firebase/database";
@@ -10,8 +10,8 @@ export default function Test({navigation}) {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(0);
     const [score, setScore] = useState(0);
-    const [userData, setUserData] = useState(null);
-    const [userScore, setUserScore] = useState(0);
+    const [userData, setUserData] = useState(0);
+    
 
     const handleAnswer = (answer) => {
       setSelectedAnswer(answer);
@@ -42,33 +42,36 @@ export default function Test({navigation}) {
         <Text>{item.text}</Text>
       </TouchableOpacity>
     );
-    
-    console.log(name.split(' ')[0]);
-    const home=()=>{
-      const db = getDatabase(app)
-      let Name=name.split(' ')[0];
-      const Ref_score = ref(db, 'score/' + Email);
-      const Ref_score_2 = ref(db, 'score/' + Email+'/'+Name);
-      const Ref_person = ref(db, 'person/' + Email);
+
+    const db = getDatabase(app);
+    const Ref_person = ref(db, 'person/' + Email);
+    useEffect(() => {
       onValue(Ref_person, (snapshot) => {
         const data = snapshot.val();
         setUserData(data); 
       });
+    }, [Email]);
+
+    const home=()=>{
+      const Name=name.split(' ')[0];
+      const Ref_score = ref(db, 'score/' + Email);
+      const Ref_score_2 = ref(db, 'score/' + Email+'/'+Name);
       onValue(Ref_score_2, (snapshot) => {
         const data = snapshot.val();
-        setUserScore(data); 
+        if(parseInt(score)>=8 && parseInt(data)<8){
+          if(!isNaN(userData?.level)){
+            console.log(data+''+score);
+            update(Ref_person,{
+              level:userData?.level+1,
+            })
+          }
+        }
+        if(parseInt(score) > parseInt(data) ){
+          update(Ref_score,{
+            [Name]: score,
+          })
+        } 
       });
-      
-      if(score>=8 && userScore<8){
-        update(Ref_person,{
-          level:userData?.level+1,
-        })
-      }
-      if(score>userScore){
-        update(Ref_score,{
-          [Name]: score,
-        })
-      }
       navigation.navigate('Home',{Email})
     }
   
