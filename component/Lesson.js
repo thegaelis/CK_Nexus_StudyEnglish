@@ -22,10 +22,11 @@ export default function Lesson(props) {
           onValue(Ref_name, (snapshot) => {
             const data = snapshot.val();
             const name = Object.keys(data);
-            console.log(name);
+           
             let score_array = [];
             for(let x of name){
-              const Ref_score = ref(db,'score/'+x+'/'+props.name);
+             
+              const Ref_score = ref(db,'score/'+x+'/'+props.name.split(' ')[0]);
               onValue(Ref_score, (snapshot_2) => {
                 const data_2 = snapshot_2.val();
                
@@ -33,7 +34,6 @@ export default function Lesson(props) {
               });
             }
                score_array.sort((a,b) => b.score-a.score);
-               console.log(score_array);
                setLeaderBoard(score_array);
           });
         }, [email]);
