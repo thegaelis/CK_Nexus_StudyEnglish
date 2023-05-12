@@ -8,7 +8,16 @@ import { getDatabase, ref, onValue} from "firebase/database";
 import Lesson from './Lesson.js'
 import {words_relation,words_time,words_weather,words_animal,words_food,words_sport,words_education,words_travel} from '../data/Word.js'
 import {questions_relation,questions_time,questions_weather,questions_animal,questions_food,questions_sport,questions_education,questions_travel}from '../data/Question.js';
-
+import 
+  {grammar_relation,
+  grammar_time,
+  grammar_weather,
+  grammar_animal,
+  grammar_food,
+  grammar_sport,
+  grammar_education,
+  grammar_travel} 
+  from '../data/Grammar.js'
 
 export default function Topic({ navigation }) {
   const [userData, setUserData] = useState(null);
@@ -51,47 +60,47 @@ export default function Topic({ navigation }) {
         <View style={styles.container}>
             {/* ÔNg thay ảnh ở trong require nha */}
             {userData?.level > 0?
-             (<Lesson picture={require('../assets/book.png')} name={'Relationships'} press={()=>navigation.navigate('Words',{data:{name:'Relationships',words: words_relation,questions: questions_relation,Email:Email}})}/>)
+             (<Lesson picture={require('../assets/book.png')} name={'Relationships'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Relationships',words: words_relation,questions: questions_relation,Email:Email,grammar:grammar_relation}})}/>)
             :
              null
             }
 
             {userData?.level > 1?
-             (<Lesson picture={require('../assets/book.png')} name={'Time'} press={()=>navigation.navigate('Words',{data:{name:'Time',words: words_time,questions: questions_time,Email:Email}})}/>             )
+             (<Lesson picture={require('../assets/book.png')} name={'Time'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Time',words: words_time,questions: questions_time,Email:Email,grammar:grammar_time}})}/>             )
             :
              null
             }
 
             {userData?.level > 2?
-             (<Lesson picture={require('../assets/book.png')} name={'Weather'} press={()=>navigation.navigate('Words',{data:{name:'Weather',words: words_weather,questions: questions_weather,Email:Email}})}/>)
+             (<Lesson picture={require('../assets/book.png')} name={'Weather'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Weather',words: words_weather,questions: questions_weather,Email:Email,grammar:grammar_weather}})}/>)
             :
              null
             }
 
             {userData?.level >3 ?
-             (<Lesson picture={require('../assets/book.png')} name={'Animals and Plants'} press={()=>navigation.navigate('Words',{data:{name:'Animals and Plants',words: words_animal,questions: questions_animal,Email:Email}})}/>)
+             (<Lesson picture={require('../assets/book.png')} name={'Animals and Plants'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Animals and Plants',words: words_animal,questions: questions_animal,Email:Email,grammar_animal}})}/>)
             :
              null
             }
             
             {userData?.level >4 ?
-            ( <Lesson picture={require('../assets/book.png')} name={'Food and Drinks'} press={()=>navigation.navigate('Words',{data:{name:'Food and Drinks',words: words_food,questions: questions_food,Email:Email}})}/>)
+            ( <Lesson picture={require('../assets/book.png')} name={'Food and Drinks'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Food and Drinks',words: words_food,questions: questions_food,Email:Email, grammar:grammar_food}})}/>)
             :
              null
             }
 
             {userData?.level >5 ?
-             (<Lesson picture={require('../assets/book.png')} name={'Sports and Entertainment'} press={()=>navigation.navigate('Words',{data:{name:'Sports and Entertainment',words: words_sport,questions: questions_sport,Email:Email}})}/>)
+             (<Lesson picture={require('../assets/book.png')} name={'Sports and Entertainment'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Sports and Entertainment',words: words_sport,questions: questions_sport,Email:Email, grammar:grammar_sport}})}/>)
             :
              null
             }
             {userData?.level >6 ?
-             (<Lesson picture={require('../assets/book.png')} name={'Education and Work'} press={()=>navigation.navigate('Words',{data:{name:'Education and Work',words: words_education,questions: questions_education,Email:Email}})}/>)
+             (<Lesson picture={require('../assets/book.png')} name={'Education and Work'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Education and Work',words: words_education,questions: questions_education,Email:Email, grammar:grammar_education}})}/>)
             :
              null
             }
             {userData?.level > 7?
-             ( <Lesson picture={require('../assets/book.png')} name={'Travel and Culture'} press={()=>navigation.navigate('Words',{data:{name:'Travel and Culture',words: words_travel,questions: questions_travel,Email:Email}})}/>)
+             ( <Lesson picture={require('../assets/book.png')} name={'Travel and Culture'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Travel and Culture',words: words_travel,questions: questions_travel,Email:Email, grammar_travel}})}/>)
             :
              null
             }

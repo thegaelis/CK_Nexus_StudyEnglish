@@ -6,7 +6,7 @@ import {app} from './Firebasecg.js';
 
 export default function Test({navigation}) {
     const route = useRoute();
-    const {name,questions,Email} = route.params.data;
+    const {name,questions,Email,words,grammar} = route.params.data;
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(0);
     const [score, setScore] = useState(0);
@@ -39,7 +39,7 @@ export default function Test({navigation}) {
       <TouchableOpacity
         style={[styles.answer, selectedAnswer === item.id ? styles.selectedAnswer : null]}
         onPress={() => handleAnswer(item.id)}>
-        <Text>{item.text}</Text>
+        <Text style={styles.answerText}>{item.text}</Text>
       </TouchableOpacity>
     );
 
@@ -72,7 +72,7 @@ export default function Test({navigation}) {
           })
         } 
       });
-      navigation.navigate('Home',{Email})
+      navigation.navigate('TopicMenu',{data:{name:name,words: words,questions: questions,Email:Email,grammar:grammar}});
     }
   
     return (
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     },
     question: {
         margin:20,
-        fontSize: 20,
+        fontSize: 25,
         marginVertical: 20,
     },
     answer: {
@@ -139,6 +139,9 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         padding: 20,
         marginVertical: 10,
+    },
+    answerText:{
+        fontSize:20,
     },
     selectedAnswer: {
         backgroundColor: '#b3d9ff',

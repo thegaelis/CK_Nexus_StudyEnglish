@@ -79,30 +79,30 @@ export default function Option({navigation}) {
   const update_pass=()=>{
     if(newPass.trim()==''||pass.trim()==''||rePass.trim()=='') {
       Alert.alert(
-          'Thông báo',
-          'Vui lòng nhập đủ thông tin',
+          'Alert',
+          'Fill all the required field',
           [    { text: 'OK' }  ]
       );
     }
     else {
       if(newPass!==rePass||newPass.length<6) {
           Alert.alert(
-              'Thông báo',
-              'Lỗi mật khẩu',
+              'Alert',
+              'Password Error',
               [    { text: 'OK' }  ]
           );
       }
       else if(userData.password!==pass){
         Alert.alert(
-          'Thông báo',
-          'Sai mật khẩu',
+          'Alert',
+          'Wrong Password',
           [    { text: 'OK' }  ]
         );
       }
       else if(newPass===userData.password){
         Alert.alert(
-          'Thông báo',
-          'Mật khẩu mới trùng với mật khẩu cũ',
+          'Alert',
+          'New password must not be the same as old password',
           [    { text: 'OK' }  ]
         );
       }
@@ -116,15 +116,15 @@ export default function Option({navigation}) {
           })
           
           Alert.alert(
-            'Thông báo',
-            'Cập nhập password thành công',
+            'Alert',
+            'Password updated succesfully',
             [    { text: 'OK' }  ]
           );
         }).catch((error) => {
           console.error(error);
           Alert.alert(
-            'Thông báo',
-            'Lỗi',
+            'Alert',
+            'Error',
             [    { text: 'OK' }  ]
           );
         });

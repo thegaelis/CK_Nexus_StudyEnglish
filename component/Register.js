@@ -18,16 +18,16 @@ export default function Register({ navigation }) {
         
         if(username.trim()==''||email.trim()==''||pass.trim()==''||rePass.trim()=='') {
             Alert.alert(
-                'Thông báo',
-                'Vui lòng nhập đủ thông tin',
+                'Alert',
+                'Please fill all the required field',
                 [    { text: 'OK' }  ]
             );
         }
         else {
             if(pass!==rePass||pass.length<6) {
                 Alert.alert(
-                    'Thông báo',
-                    'Lỗi mật khẩu',
+                    'Alert',
+                    'Password Error',
                     [    { text: 'OK' }  ]
                 );
             }
@@ -36,8 +36,8 @@ export default function Register({ navigation }) {
                 createUserWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     Alert.alert(
-                        'Thông báo',
-                        'Đăng kí tài khoản thành công',
+                        'Alert',
+                        'Registered Successfully',
                         [    { text: 'OK' }  ]
                     );
                     add(username,email,pass);
@@ -45,12 +45,12 @@ export default function Register({ navigation }) {
                     setEmail('');
                     setPass('');
                     setrePass('');
-                    navigation.navigate('Login');
+                    navigation.navigate('Welcome');
                 })
                 .catch(() => {
                     Alert.alert(
-                        'Thông báo',
-                        'Email đã tồn tại',
+                        'Alert',
+                        'This email is linked with an account',
                         [    { text: 'OK' }  ]
                     );
                     
