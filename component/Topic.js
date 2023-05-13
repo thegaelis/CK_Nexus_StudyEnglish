@@ -60,37 +60,37 @@ export default function Topic({ navigation }) {
         <View style={styles.container}>
             {/* ÔNg thay ảnh ở trong require nha */}
             {userData?.level > 0?
-             (<Lesson picture={require('../assets/book.png')} name={'Relationships'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Relationships',words: words_relation,questions: questions_relation,Email:Email,grammar:grammar_relation}})}/>)
+             (<Lesson picture={require('../assets/relationship.png')} name={'Relationships'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Relationships',words: words_relation,questions: questions_relation,Email:Email,grammar:grammar_relation}})}/>)
             :
              null
             }
 
             {userData?.level > 1?
-             (<Lesson picture={require('../assets/book.png')} name={'Time'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Time',words: words_time,questions: questions_time,Email:Email,grammar:grammar_time}})}/>             )
+             (<Lesson picture={require('../assets/chronometer.png')} name={'Time'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Time',words: words_time,questions: questions_time,Email:Email,grammar:grammar_time}})}/>             )
             :
              null
             }
 
             {userData?.level > 2?
-             (<Lesson picture={require('../assets/book.png')} name={'Weather'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Weather',words: words_weather,questions: questions_weather,Email:Email,grammar:grammar_weather}})}/>)
+             (<Lesson picture={require('../assets/weather-forecast.png')} name={'Weather'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Weather',words: words_weather,questions: questions_weather,Email:Email,grammar:grammar_weather}})}/>)
             :
              null
             }
 
             {userData?.level >3 ?
-             (<Lesson picture={require('../assets/book.png')} name={'Animals and Plants'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Animals and Plants',words: words_animal,questions: questions_animal,Email:Email,grammar_animal}})}/>)
+             (<Lesson picture={require('../assets/hydroponic.png')} name={'Animals and Plants'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Animals and Plants',words: words_animal,questions: questions_animal,Email:Email,grammar_animal}})}/>)
             :
              null
             }
             
             {userData?.level >4 ?
-            ( <Lesson picture={require('../assets/book.png')} name={'Food and Drinks'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Food and Drinks',words: words_food,questions: questions_food,Email:Email, grammar:grammar_food}})}/>)
+            ( <Lesson picture={require('../assets/drink.png')} name={'Food and Drinks'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Food and Drinks',words: words_food,questions: questions_food,Email:Email, grammar:grammar_food}})}/>)
             :
              null
             }
 
             {userData?.level >5 ?
-             (<Lesson picture={require('../assets/book.png')} name={'Sports and Entertainment'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Sports and Entertainment',words: words_sport,questions: questions_sport,Email:Email, grammar:grammar_sport}})}/>)
+             (<Lesson picture={require('../assets/sports.png')} name={'Sports and Entertainment'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Sports and Entertainment',words: words_sport,questions: questions_sport,Email:Email, grammar:grammar_sport}})}/>)
             :
              null
             }
@@ -100,7 +100,7 @@ export default function Topic({ navigation }) {
              null
             }
             {userData?.level > 7?
-             ( <Lesson picture={require('../assets/book.png')} name={'Travel and Culture'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Travel and Culture',words: words_travel,questions: questions_travel,Email:Email, grammar_travel}})}/>)
+             ( <Lesson picture={require('../assets/travel.png')} name={'Travel and Culture'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Travel and Culture',words: words_travel,questions: questions_travel,Email:Email, grammar_travel}})}/>)
             :
              null
             }
