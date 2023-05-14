@@ -12,4 +12,6 @@ We are happy to introduce the app "Study English with Nexus"", where you can lea
 
 
 Version log:
-V.0.0 - Sat, April 15, 2022 : Created the project.
+V.0.0 - Sat, April 15, 2023 : Created the project.
+
+V1 - Sat, May 13, 2023 : Released first release for demo purpose

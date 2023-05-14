@@ -385,7 +385,7 @@ const words_travel=[
     vietsub:'Du lịch nước ngoài'
   },
   {
-   picture:require('../assets/words/travel/LeisureTravel.JPG'),
+   picture:require('../assets/words/travel/LeisureTravel.jpeg'),
     english:'Leisure travel',
     vietsub:'Du lịch nghỉ dưỡng'
   },
