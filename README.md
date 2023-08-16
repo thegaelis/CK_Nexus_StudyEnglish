@@ -15,3 +15,7 @@ Version log:
 V.0.0 - Sat, April 15, 2023 : Created the project.
 
 V1 - Sat, May 13, 2023 : Released first release for demo purpose
+V2 - Wed, Aug 23, 2023 : Released 90% completed products. In Alpha period.
+Changelog:
+- Integrated Redux for saving state.
+- Completed the data.
