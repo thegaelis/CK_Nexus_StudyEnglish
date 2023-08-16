@@ -6,6 +6,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {app} from './Firebasecg.js';
 import { getDatabase, ref, set } from "firebase/database";
+import { useDispatch } from 'react-redux';
+import { registerFailed, registerSuccess } from './store/action/auth.js';
 
 
 export default function Register({ navigation }) {
@@ -45,9 +47,11 @@ export default function Register({ navigation }) {
                     setEmail('');
                     setPass('');
                     setrePass('');
+                    useDispatch(registerSuccess(email));
                     navigation.navigate('Welcome');
                 })
                 .catch(() => {
+                    useDispatch(registerFailed);
                     Alert.alert(
                         'Alert',
                         'This email is linked with an account',

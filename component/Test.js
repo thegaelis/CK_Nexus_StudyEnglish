@@ -3,15 +3,18 @@ import { View, Text, TouchableOpacity, StyleSheet, FlatList,Alert} from 'react-n
 import { useRoute } from '@react-navigation/native';
 import { getDatabase,ref,update,onValue} from "firebase/database";
 import {app} from './Firebasecg.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLevel } from './store/action/data.js';
 
 export default function Test({navigation}) {
     const route = useRoute();
-    const {name,questions,Email,words,grammar} = route.params.data;
+    const {name,questions,words,grammar} = route.params.data;
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(0);
     const [score, setScore] = useState(0);
     const [userData, setUserData] = useState(0);
-    
+    const Email = useSelector((state)=> state.email);
+    const dispatch = useDispatch();
 
     const handleAnswer = (answer) => {
       setSelectedAnswer(answer);
@@ -70,9 +73,10 @@ export default function Test({navigation}) {
           update(Ref_score,{
             [Name]: score,
           })
-        } 
+        }
+        dispatch(setLevel(Email,userData?.level)) 
       });
-      navigation.navigate('TopicMenu',{data:{name:name,words: words,questions: questions,Email:Email,grammar:grammar}});
+      navigation.navigate('TopicMenu',{data:{name:name,words: words,questions: questions,grammar:grammar}});
     }
   
     return (

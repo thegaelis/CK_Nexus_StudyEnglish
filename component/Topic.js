@@ -3,8 +3,7 @@ import React,{useEffect,useState}  from 'react'
 import { useRoute } from '@react-navigation/native';
 import {app} from './Firebasecg.js';
 import { getDatabase, ref, onValue} from "firebase/database";
-
-
+import { useSelector } from 'react-redux';
 import Lesson from './Lesson.js'
 import {words_relation,words_time,words_weather,words_animal,words_food,words_sport,words_education,words_travel} from '../data/Word.js'
 import {questions_relation,questions_time,questions_weather,questions_animal,questions_food,questions_sport,questions_education,questions_travel}from '../data/Question.js';
@@ -20,38 +19,26 @@ import
   from '../data/Grammar.js'
 
 export default function Topic({ navigation }) {
-  const [userData, setUserData] = useState(null);
-  const route = useRoute();
-  const {Email} = route.params;
-
+  const userLevel = useSelector((state) => state.level);
 
   function click(){
     return navigation.goBack();
   }
-
-  useEffect(() => {
-    const db = getDatabase(app);
-    const starCountRef = ref(db, 'person/' + Email);
-    onValue(starCountRef, (snapshot) => {
-        const data = snapshot.val();
-        setUserData(data); 
-    });
-  }, [Email]);
 
 
   
   return (
     <View>
       <View style={styles.topContainer}>
-      <TouchableOpacity style={styles.BannerBack} onPress={() => navigation.navigate('Home',{Email})}>
+      <TouchableOpacity style={styles.BannerBack} onPress={() => navigation.navigate('Home')}>
           <Image source={require('../assets/back.png')} style={styles.backbanner}></Image>
           <Text style={styles.banner}>
             Topic
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.user} onPress={() => navigation.navigate('User',{Email})}>
+        <TouchableOpacity style={styles.user} onPress={() => navigation.navigate('User')}>
           <Text style={styles.score}>
-          {userData?.level}
+          {userLevel}
           </Text>
           <Image source={require('../assets/user.png')} style={styles.image}></Image>
         </TouchableOpacity>
@@ -59,48 +46,48 @@ export default function Topic({ navigation }) {
       <ScrollView>
         <View style={styles.container}>
             {/* ÔNg thay ảnh ở trong require nha */}
-            {userData?.level > 0?
-             (<Lesson picture={require('../assets/relationship.png')} name={'Relationships'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Relationships',words: words_relation,questions: questions_relation,Email:Email,grammar:grammar_relation}})}/>)
+            {userLevel > 0?
+             (<Lesson picture={require('../assets/relationship.png')} name={'Relationships'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Relationships',words: words_relation,questions: questions_relation,grammar:grammar_relation}})}/>)
             :
              null
             }
 
-            {userData?.level > 1?
-             (<Lesson picture={require('../assets/chronometer.png')} name={'Time'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Time',words: words_time,questions: questions_time,Email:Email,grammar:grammar_time}})}/>             )
+            {userLevel > 1?
+             (<Lesson picture={require('../assets/chronometer.png')} name={'Time'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Time',words: words_time,questions: questions_time,grammar:grammar_time}})}/>             )
             :
              null
             }
 
-            {userData?.level > 2?
-             (<Lesson picture={require('../assets/weather-forecast.png')} name={'Weather'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Weather',words: words_weather,questions: questions_weather,Email:Email,grammar:grammar_weather}})}/>)
+            {userLevel > 2?
+             (<Lesson picture={require('../assets/weather-forecast.png')} name={'Weather'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Weather',words: words_weather,questions: questions_weather,grammar:grammar_weather}})}/>)
             :
              null
             }
 
-            {userData?.level >3 ?
-             (<Lesson picture={require('../assets/hydroponic.png')} name={'Animals and Plants'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Animals and Plants',words: words_animal,questions: questions_animal,Email:Email,grammar_animal}})}/>)
+            {userLevel >3 ?
+             (<Lesson picture={require('../assets/hydroponic.png')} name={'Animals and Plants'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Animals and Plants',words: words_animal,questions: questions_animal,grammar_animal}})}/>)
             :
              null
             }
             
-            {userData?.level >4 ?
-            ( <Lesson picture={require('../assets/drink.png')} name={'Food and Drinks'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Food and Drinks',words: words_food,questions: questions_food,Email:Email, grammar:grammar_food}})}/>)
+            {userLevel >4 ?
+            ( <Lesson picture={require('../assets/drink.png')} name={'Food and Drinks'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Food and Drinks',words: words_food,questions: questions_food, grammar:grammar_food}})}/>)
             :
              null
             }
 
-            {userData?.level >5 ?
-             (<Lesson picture={require('../assets/sports.png')} name={'Sports and Entertainment'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Sports and Entertainment',words: words_sport,questions: questions_sport,Email:Email, grammar:grammar_sport}})}/>)
+            {userLevel >5 ?
+             (<Lesson picture={require('../assets/sports.png')} name={'Sports and Entertainment'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Sports and Entertainment',words: words_sport,questions: questions_sport, grammar:grammar_sport}})}/>)
             :
              null
             }
-            {userData?.level >6 ?
-             (<Lesson picture={require('../assets/book.png')} name={'Education and Work'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Education and Work',words: words_education,questions: questions_education,Email:Email, grammar:grammar_education}})}/>)
+            {userLevel >6 ?
+             (<Lesson picture={require('../assets/book.png')} name={'Education and Work'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Education and Work',words: words_education,questions: questions_education, grammar:grammar_education}})}/>)
             :
              null
             }
-            {userData?.level > 7?
-             ( <Lesson picture={require('../assets/travel.png')} name={'Travel and Culture'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Travel and Culture',words: words_travel,questions: questions_travel,Email:Email, grammar_travel}})}/>)
+            {userLevel > 7?
+             ( <Lesson picture={require('../assets/travel.png')} name={'Travel and Culture'} press={()=>navigation.navigate('TopicMenu',{data:{name:'Travel and Culture',words: words_travel,questions: questions_travel, grammar_travel}})}/>)
             :
              null
             }

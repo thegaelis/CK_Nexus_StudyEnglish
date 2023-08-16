@@ -1,25 +1,32 @@
 import { StyleSheet, Text, View, ImageBackground} from 'react-native'
-import React from 'react'
+import React, {useEffect} from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useSelector } from 'react-redux'
 export default function Welcome({ navigation }) {
-  return (
-    <ImageBackground source={require('../assets/background.png')}>
-        <View style={styles.container}>
-          <Text style={styles.text} >
-            {'Study English Vocabulary \nwith Nexus'}
-            </Text>
-          <TouchableOpacity style={styles.button}>
-            <Text onPress={() => navigation.navigate('Login')} style={styles.b}>Login</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-          <Text onPress={() => navigation.navigate('Register')} style={styles.b}>Register</Text>
-          </TouchableOpacity>
+  const isAuth = useSelector((state) => state.isAuthenticated);
+  useEffect(() => { // Use useEffect to handle navigation
+    if (isAuth) {
+      navigation.navigate('Home');
+    }
+  }, [isAuth, navigation]);
+    return (
+      <ImageBackground source={require('../assets/background.png')}>
+          <View style={styles.container}>
+            <Text style={styles.text} >
+              {'Study English Vocabulary \nwith Nexus'}
+              </Text>
+            <TouchableOpacity style={styles.button}>
+              <Text onPress={() => navigation.navigate('Login')} style={styles.b}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+            <Text onPress={() => navigation.navigate('Register')} style={styles.b}>Register</Text>
+            </TouchableOpacity>
+        
+      </View>
+      </ImageBackground>
       
-    </View>
-    </ImageBackground>
-    
-  )
-}
+    )
+  }
 
 const styles = StyleSheet.create({
     container: {

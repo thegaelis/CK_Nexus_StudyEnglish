@@ -1,17 +1,17 @@
 import { StyleSheet, Text, View ,Image, TouchableOpacity,TouchableWithoutFeedback} from 'react-native'
 import React,{useEffect,useState} from 'react';
 import { getAuth} from "firebase/auth";
+import { useSelector } from 'react-redux';
 import {app} from './Firebasecg.js';
 import { getDatabase,ref,onValue} from "firebase/database";
 
 export default function Lesson(props) {
         const [score, setScore] = useState(0);
         const [leaderboard, setLeaderBoard] = useState([]);
-        const user = getAuth(app).currentUser;
-        const email=user.email.split("@")[0];
+        const Email = useSelector((state) => state.email);
         useEffect(() => {
           const db = getDatabase(app);
-          const Ref_lesson = ref(db, 'score/' + email+'/'+props.name.split(' ')[0]);
+          const Ref_lesson = ref(db, 'score/' + Email+'/'+props.name.split(' ')[0]);
           const Ref_name = ref(db, 'score');
           
           onValue(Ref_lesson, (snapshot) => {
@@ -21,22 +21,25 @@ export default function Lesson(props) {
 
           onValue(Ref_name, (snapshot) => {
             const data = snapshot.val();
-            const name = Object.keys(data);
-           
+            const names = Object.keys(data);
+            
             let score_array = [];
-            for(let x of name){
-             
-              const Ref_score = ref(db,'score/'+x+'/'+props.name.split(' ')[0]);
+            for (let x of names) {
+              const Ref_score = ref(db, 'score/' + x + '/' + props.name.split(' ')[0]);
               onValue(Ref_score, (snapshot_2) => {
                 const data_2 = snapshot_2.val();
-               
-                score_array.push({name:x, score:data_2});
+                const usernameRef = ref(db, 'person/' + x);
+                onValue(usernameRef, (snapshot_username) => {
+                  const data_username = snapshot_username.val();
+                  score_array.push({ name: data_username.username, score: data_2 });
+                });
               });
             }
-               score_array.sort((a,b) => b.score-a.score);
-               setLeaderBoard(score_array);
-          });
-        }, [email]);
+            score_array.sort((a, b) => b.score - a.score);
+            setLeaderBoard(score_array);
+          }, [Email]);
+        }, [Email]);
+        
         return (
             // <View style = {styles.container}>
             //   <Image style={styles.picture} source={props.picture} />

@@ -1,21 +1,22 @@
 import { StyleSheet, Text, View,ScrollView,TouchableOpacity, Image} from 'react-native'
 import React,{useEffect,useState}  from 'react'
-import { useRoute } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import {app} from './Firebasecg.js';
 import { getDatabase, ref, onValue} from "firebase/database";
 
 export default function Home({ navigation }) {
   const [userData, setUserData] = useState(null);
   const [leaderboard, setLeaderBoard] = useState([]);
-  const route = useRoute();
-  const {Email} = route.params;
-
+  const Email = useSelector((state) => state.email);
+  const userLevel = useSelector((state) => state.level);
 
   function click(){
     return navigation.goBack();
   }
 
   useEffect(() => {
+    console.log(Email);
+    console.log(userLevel);
     const db = getDatabase(app);
     const Ref_person = ref(db, 'person/' + Email);
     const Ref_name = ref(db, 'person');
@@ -24,23 +25,22 @@ export default function Home({ navigation }) {
         setUserData(data); 
     });
     onValue(Ref_name, (snapshot) => {
-        const data = snapshot.val();
-        const name = Object.keys(data);
-        
-        let level = [];
-        for(let x of name){
-          const Ref_level = ref(db,'person/'+x);
-          onValue(Ref_level, (snapshot_2) => {
-            const data_2 = snapshot_2.val();
-            level.push({name: x, level:data_2.level});
-          });
-        }
-        level.sort((a,b) => b.level-a.level);
-        setLeaderBoard(level);
-    });
-  }, [Email]);
+      const data = snapshot.val();
+      const names = Object.keys(data);
+      
+      let level = [];
+      for (let x of names) {
+        const Ref_level = ref(db, 'person/' + x);
+        onValue(Ref_level, (snapshot_2) => {
+          const data_2 = snapshot_2.val();
+          level.push({ name: data_2.username, level: data_2.level }); // Use data_2.username here
+        });
+      }
+      level.sort((a, b) => b.level - a.level);
+      setLeaderBoard(level);
+    }, [Email]);
+  },[Email]);
 
-  console.log(leaderboard);
  
   return (
     <View>
@@ -49,9 +49,9 @@ export default function Home({ navigation }) {
           Hello, {userData?.username}
         </Text>
         
-        <TouchableOpacity style={styles.user} onPress={() => navigation.navigate('User',{Email})}>
+        <TouchableOpacity style={styles.user} onPress={() => navigation.navigate('User')}>
           <Text style={styles.level}>
-          {userData?.level}
+          {userLevel}
           </Text>
           <Image source={require('../assets/user.png')} style={styles.image}></Image>
         </TouchableOpacity>
@@ -82,8 +82,8 @@ export default function Home({ navigation }) {
             <View style={styles.itemsTopic}>
               <Text style={styles.name}>Topic</Text>
               <Image style={styles.picture} source={require('../assets/topics.png')} />
-              <Text style={styles.content}>Current Topic: {userData?.level}</Text>
-              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Topic',{Email})}>
+              <Text style={styles.content}>Current Topic: {userLevel}</Text>
+              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Topic')}>
                 <Text style={styles.b}>View all topic</Text>
               </TouchableOpacity>
             </View>
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
       color:'white',
     },
     leaderboardContainerFirst:{
-      dipslay:'flex',
+      display:'flex',
       flexDirection:'row',
       width:'auto',
       margin:10,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
 
     },
     user:{
-      dipslay:'flex',
+      display:'flex',
       flexDirection:'row',
       marginLeft:'auto',
       marginRight:20,

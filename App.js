@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { Provider } from 'react-redux';
+import Store from './component/store/store.js';
 import Home from './component/Home.js';
 import Login from './component/Login.js';
 import Words from './component/Words.js';
@@ -20,7 +20,8 @@ const Stack = createNativeStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
+    <Provider store = {Store}>
+      <NavigationContainer>
       <Stack.Navigator initialRouteName="Welcome" screenOptions={{
     headerShown: false
   }}>
@@ -38,15 +39,10 @@ function App() {
         <Stack.Screen name="GrammarContent" component={GrammarContent}/>
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
+    
     
   );
 }
 
-
 export default App;
-
-
-const styles = StyleSheet.create({
- 
-  
-});

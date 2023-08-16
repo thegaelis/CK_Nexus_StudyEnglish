@@ -8,10 +8,11 @@ import { getDatabase,ref,update,onValue} from "firebase/database";
 import { getAuth,updatePassword } from "firebase/auth";
 import {app} from './Firebasecg.js';
 import { Alert } from 'react-native';
+import { useSelector } from 'react-redux';
 
 export default function Option({navigation}) {
   const route = useRoute();
-  const {Email} = route.params;
+  const Email = useSelector((state) => state.email);
   const [name,setName] = useState('');
   const [pass, setPass] = useState('');
   const [newPass, setNewPass] = useState('');
@@ -135,7 +136,7 @@ export default function Option({navigation}) {
   }
         return (
             <View>
-              <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('User',{Email})}>
+              <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('User')}>
                 <Image source={require('../assets/back.png')} style={styles.backbanner}></Image>
                 <Text style={styles.banner}>
                   Edit Your Account
@@ -149,7 +150,7 @@ export default function Option({navigation}) {
                   <Text style={styles.formbanner}>Info</Text>
                   <View style={styles.section}>
                       <Text style={styles.text}>Username</Text>
-                      <TextInput value={name} onChangeText={handleNameChange} style={styles.input} type="username" autoCapitalize='none'></TextInput>
+                      <TextInput value={userData?.username} onChangeText={handleNameChange} style={styles.input} type="username" autoCapitalize='none'></TextInput>
                   </View>
                   <View>
                       <TouchableOpacity style={styles.button}>

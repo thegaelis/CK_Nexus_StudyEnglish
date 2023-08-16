@@ -7,7 +7,7 @@ import { useRoute } from '@react-navigation/native';
 
 export default function Words({navigation}) {
   const route = useRoute();
-  const {Email,name, words, questions, grammar} = route.params.data;
+  const {name, words, questions, grammar} = route.params.data;
   const Render=({item})=>{
     return(
       <Word picture={item.picture} english={item.english} vietsub={item.vietsub} />
@@ -15,7 +15,7 @@ export default function Words({navigation}) {
   }
   return (
       <View>
-        <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('TopicMenu',{data:{name:name,words: words,questions: questions,Email:Email, grammar:grammar}})}>
+        <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('TopicMenu',{data:{name:name,words: words,questions: questions, grammar:grammar}})}>
           <Image source={require('../assets/back.png')} style={styles.backbanner}></Image>
           <Text style={styles.banner}>
             {name}

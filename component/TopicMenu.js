@@ -6,26 +6,26 @@ import { useRoute } from '@react-navigation/native';
 
 export default function TopicMenu({navigation}) {
   const route = useRoute();
-  const {Email,name, words, questions, grammar} = route.params.data;
+  const {name, words, questions, grammar} = route.params.data;
 
   return (
       <View>
-        <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('Topic',{Email})}>
+        <TouchableOpacity style={styles.topContainer} onPress={() => navigation.navigate('Topic')}>
           <Image source={require('../assets/back.png')} style={styles.backbanner}></Image>
           <Text style={styles.banner}>
             {name}
           </Text>
         </TouchableOpacity>
         <View style={styles.menuContainer}>
-            <TouchableOpacity style={styles.option} onPress={()=>navigation.navigate('Words',{data:{name:name,words: words,questions: questions,Email:Email, grammar: grammar}})}>
+            <TouchableOpacity style={styles.option} onPress={()=>navigation.navigate('Words',{data:{name:name,words: words,questions: questions, grammar: grammar}})}>
                 <Text style={styles.optionTitle}>Vocabulary</Text>
                 <Image style={styles.optionPicture} source={require('../assets/vocabulary.png')}></Image>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={()=>navigation.navigate('GrammarContent',{data:{name:name,words: words,questions: questions,Email:Email , grammar: grammar}})}>
+            <TouchableOpacity style={styles.option} onPress={()=>navigation.navigate('GrammarContent',{data:{name:name,words: words,questions: questions, grammar: grammar}})}>
                 <Text style={styles.optionTitle}>Grammar</Text>
                 <Image style={styles.optionPicture} source={require('../assets/grammar.png')}></Image>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Test',{data:{name:name,words:words,questions:questions,Email:Email , grammar: grammar}})}>
+            <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Test',{data:{name:name,words:words,questions:questions , grammar: grammar}})}>
                 <Text style={styles.optionTitle}>Test</Text>
                 <Image style={styles.optionPicture} source={require('../assets/exam.png')}></Image>
             </TouchableOpacity>

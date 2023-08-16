@@ -1,13 +1,18 @@
 import { StyleSheet, Text, View,TextInput, ImageBackground} from 'react-native'
 import React,{ useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-
+import { useDispatch, useSelector } from 'react-redux';
 import { getAuth,signInWithEmailAndPassword } from "firebase/auth";
 import { Alert } from 'react-native';
 import {app} from './Firebasecg.js';
+import { getDatabase, ref, onValue} from "firebase/database";
+import { loginFailed, loginSuccess } from './store/action/auth.js';
+import { setLogLevel } from 'firebase/app';
+import { setLevel } from './store/action/data.js';
 
 
 export default function Login({ navigation }) {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
@@ -26,16 +31,27 @@ export default function Login({ navigation }) {
         const Email=email.split('@')[0];
         setEmail('');
         setPass('');
-        navigation.navigate('Home',{Email});
+        console.log(Email);
+        dispatch(loginSuccess(Email));
+        const db = getDatabase(app);
+        const Ref_person = ref(db, 'person/' + Email);
+        onValue(Ref_person, (snapshot) => {
+            const data = snapshot.val();
+            dispatch(setLevel(Email,data?.level)); 
+        });
+      
+        navigation.navigate('Home');
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
+        dispatch(loginFailed);
         Alert.alert(
           'Alert',
           'Invalid Credential',
           [    { text: 'OK' }  ]
         );
       });
+      
   }
 
   return (
